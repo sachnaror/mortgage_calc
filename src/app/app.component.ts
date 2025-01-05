@@ -9,5 +9,5 @@ import { MortgageFormComponent } from './mortgage-form/mortgage-form.component';
   imports: [MortgageFormComponent], // Import the standalone MortgageFormComponent
 })
 export class AppComponent {
-  title = 'mortgage_calc'; // A simple title property
+  title = ''; // A simple title property
 }
