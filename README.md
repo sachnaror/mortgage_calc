@@ -1,59 +1,103 @@
-# MortgageCalc
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+# 🏡 Mortgage Mayhem Calculator 🏦
 
-## Development server
+Welcome to **Mortgage Mayhem Calculator**, the app that turns the boring world of loans into a rollercoaster of humor and finance! Whether you're buying a mansion or a cardboard box, we calculate everything with precision and wit! 
 
-To start a local development server, run:
+---
 
+## 📋 Features
+- **Loan Amount:** Enter how much money you need to borrow (no judgment, we all dream big!).
+- **Interest Rate:** Specify the rate your bank will use to snatch your soul.
+- **Loan Term:** Choose the number of years you'll be stuck paying (30 years? Forever? Your choice!).
+- **Credit Score:** Tell us your score—no need to lie, we’re not your bank.
+- **Property Type:** Is it Residential, Commercial, or a haunted mansion? We calculate for all!
+- **Property Tax Rate:** Because the government also wants a piece of the pie.
+- **Home Insurance Cost:** For those "just in case your neighbor's BBQ goes wild" scenarios.
+
+---
+
+## 🎉 Why This App?
+- **Accurate Results:** Get detailed calculations for your monthly payment and total loan cost.
+- **Save to Database:** Data saved directly to MongoDB so you can revisit your financial nightmares later.
+- **Full Stack Integration:** Works with Angular frontend and Express backend. Even your bank might be jealous.
+
+---
+
+## 🚀 Getting Started
+
+1. Clone the repo (it's free, we promise!):
+   ```bash
+   git clone https://github.com/yourusername/mortgage-calculator
+   ```
+
+2. Install dependencies (both frontend and backend):
+   ```bash
+   cd backend
+   npm install
+   cd ../frontend
+   npm install
+   ```
+
+3. Run the backend:
+   ```bash
+   node server.js
+   ```
+
+4. Run the frontend:
+   ```bash
+   ng serve
+   ```
+
+5. Visit the app at:
+   ```
+   http://localhost:4200
+   ```
+
+---
+
+## 🛠️ Technologies Used
+- **Frontend:** Angular (The superhero of SPAs)
+- **Backend:** Express.js (Fast, sleek, and steals your loan data... kidding!)
+- **Database:** MongoDB (Your data is safe here... we think)
+- **Styling:** Bootstrap (We made it pretty for you)
+
+---
+
+## 🤣 Fun Facts
+- Did you know that the average person spends 20 years paying off a mortgage? Use this app and you’ll know EXACTLY how depressing that is!
+- Our code is 99.9% bug-free. The 0.1%? That’s for feature updates we forgot.
+
+---
+
+## 🤓 Example API Calls
+Save a mortgage:
 ```bash
-ng serve
+curl -X POST http://localhost:3000/calculate -H "Content-Type: application/json" -d '{"loanAmount":200000,"interestRate":5,"loanTerm":30,"creditScore":"Excellent","propertyType":"Residential","propertyTaxRate":1.2,"insuranceCost":500}'
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+Fetch all saved mortgages:
 ```bash
-ng generate component component-name
+curl -X GET http://localhost:3000/mortgages
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 📞 Support
+Have a question? Want to submit a feature request? Or just want to send us a joke? Reach out at:
+- Email: **support@mortgagemayhem.com**
+- Twitter: [@MortgageMayhem](https://twitter.com/MortgageMayhem)
 
-## Building
+---
 
-To build the project run:
+## ❤️ Contributors
+- You, for using this app! 🎉
+- Our coffee mugs, for keeping us caffeinated. ☕
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🚧 Disclaimer
+This app is for entertainment and educational purposes only. Please consult a financial advisor before making actual decisions. We’re coders, not fortune tellers!
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Enjoy the journey of homeownership with **Mortgage Mayhem Calculator**! 🏠✨
