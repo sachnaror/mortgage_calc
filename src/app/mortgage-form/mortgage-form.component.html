@@ -1,7 +1,6 @@
 <div class="calculator-container">
   <h3 class="text-center mb-4">Mortgage Calculator</h3>
 
-  <!-- Form -->
   <form (ngSubmit)="onSubmit()" #mortgageForm="ngForm">
     <!-- Loan Amount -->
     <div class="mb-3">
@@ -38,7 +37,7 @@
         name="loanTerm"
         [(ngModel)]="formData.loanTerm"
       >
-        <option value="30">30 Years</option>
+        <option value="30">30 Years (Lower monthly, higher interest)</option>
         <option value="20">20 Years</option>
         <option value="15">15 Years</option>
         <option value="10">10 Years</option>
@@ -55,10 +54,10 @@
         name="creditScore"
         [(ngModel)]="formData.creditScore"
       >
-        <option value="Excellent">Excellent (740+)</option>
-        <option value="Good">Good (680-739)</option>
-        <option value="Fair">Fair (620-679)</option>
-        <option value="Poor">Poor (&lt;620)</option>
+        <option value="Excellent (740+)">Excellent (740+)</option>
+        <option value="Good (680-739)">Good (680-739)</option>
+        <option value="Fair (620-679)">Fair (620-679)</option>
+        <option value="Poor (<620)">Poor (&lt;620)</option>
       </select>
     </div>
 
@@ -73,7 +72,7 @@
       >
         <option value="Residential">Residential</option>
         <option value="Commercial">Commercial</option>
-        <option value="Investment">Investment Property</option>
+        <option value="Investment Property">Investment Property</option>
       </select>
     </div>
 
@@ -105,14 +104,18 @@
 
     <!-- Submit Button -->
     <button type="submit" class="btn btn-primary w-100">
-      Calculate Mortgage
+      Calculate and Save Mortgage
     </button>
   </form>
 
   <!-- Results -->
   <div class="mt-4" *ngIf="results">
     <h4>Results:</h4>
-    <p>Monthly Payment: ${{ results.monthlyPayment }}</p>
-    <p>Total Payment: ${{ results.totalPayment }}</p>
+    <p>Adjusted Interest Rate: {{ results.adjustedInterestRate }}%</p>
+    <p>Monthly Principal & Interest Payment: ${{ results.monthlyPrincipalAndInterest }}</p>
+    <p>Monthly Property Tax: ${{ results.monthlyPropertyTax }}</p>
+    <p>Monthly Home Insurance: ${{ results.monthlyInsurance }}</p>
+    <p><strong>Total Monthly Payment: ${{ results.totalMonthlyPayment }}</strong></p>
+    <p>Total Loan Cost (Including Interest): ${{ results.totalLoanCost }}</p>
   </div>
 </div>
