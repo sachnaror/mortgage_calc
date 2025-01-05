@@ -6,83 +6,65 @@ const cors = require("cors");
 const app = express();
 
 // MongoDB Connection
-const MONGO_URI = process.env.MONGO_URI;
 mongoose
-    .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("Connected to MongoDB Atlas"))
-    .catch((err) => console.error("Error connecting to MongoDB:", err));
+    .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("Connected to MongoDB"))
+    .catch((err) => {
+        console.error("MongoDB connection error:", err.message);
+        process.exit(1); // Exit if MongoDB connection fails
+    });
 
 // Middleware
-app.use(cors({ origin: "http://localhost:4200" })); // Allow frontend origin
-app.use(express.json()); // Parse JSON request bodies
+app.use(cors({ origin: "http://localhost:4200" })); // Adjust based on your frontend URL
+app.use(express.json()); // Parse JSON bodies
 
 // Mortgage Schema
 const MortgageSchema = new mongoose.Schema({
-    loanAmount: { type: Number, required: true },
-    interestRate: { type: Number, required: true },
-    loanTerm: { type: Number, required: true },
-    creditScore: { type: String, required: true },
-    propertyType: { type: String, required: true },
-    propertyTaxRate: { type: Number, required: true },
-    insuranceCost: { type: Number, required: true },
-    adjustedInterestRate: { type: Number },
-    totalMonthlyPayment: { type: Number },
+    loanAmount: { type: Number, required: false },
+    interestRate: { type: Number, required: false },
+    loanTerm: { type: Number, required: false },
+    creditScore: { type: String, required: false },
+    propertyType: { type: String, required: false },
+    propertyTaxRate: { type: Number, required: false },
+    insuranceCost: { type: Number, required: false },
+    monthlyPayment: { type: Number, required: false },
+    totalPayment: { type: Number, required: false },
 });
 
 const Mortgage = mongoose.model("Mortgage", MortgageSchema);
 
-// POST /calculate: Save mortgage data
+// Save Mortgage Data Endpoint
 app.post("/calculate", async (req, res) => {
     try {
-        const data = req.body;
-
-        // Derive adjustedInterestRate and totalMonthlyPayment if not provided
-        data.adjustedInterestRate = data.interestRate + 0.5; // Example adjustment logic
-        data.totalMonthlyPayment =
-            (data.loanAmount * (data.adjustedInterestRate / 100)) / 12; // Simplified calculation
-
-        // Save data to MongoDB
-        const mortgage = new Mortgage(data);
-        await mortgage.save();
-
-        res.status(200).send({ message: "Mortgage data saved successfully!", data: mortgage });
+        const mortgageData = req.body;
+        const savedMortgage = new Mortgage(mortgageData);
+        await savedMortgage.save();
+        res.status(200).send({
+            message: "Mortgage data saved successfully!",
+            data: savedMortgage,
+        });
     } catch (error) {
         console.error("Error saving mortgage data:", error.message);
-        res.status(500).send({ error: "Internal server error." });
+        res.status(500).send({ error: "Failed to save mortgage data." });
     }
 });
 
-// GET /mortgages: Retrieve all mortgage records with pagination
+// Fetch All Mortgages Endpoint
 app.get("/mortgages", async (req, res) => {
     try {
-        const { page = 1, limit = 10 } = req.query;
-
-        // Fetch records with pagination
-        const mortgages = await Mortgage.find()
-            .skip((page - 1) * limit)
-            .limit(Number(limit));
-
-        res.status(200).send({ mortgages, page: Number(page), limit: Number(limit) });
+        const mortgages = await Mortgage.find();
+        res.status(200).send(mortgages);
     } catch (error) {
-        console.error("Error retrieving mortgage data:", error.message);
-        res.status(500).send({ error: "Failed to fetch mortgage data." });
+        console.error("Error fetching mortgages:", error.message);
+        res.status(500).send({ error: "Failed to fetch mortgages." });
     }
 });
 
-// Default 404 Route
+// Default 404 handler
 app.use((req, res) => {
-    res.status(404).send({
-        error: "Endpoint not found",
-        message: "Please use one of the available endpoints.",
-        availableEndpoints: [
-            { method: "POST", path: "/calculate", description: "Save mortgage data" },
-            { method: "GET", path: "/mortgages", description: "Get mortgage records with pagination" },
-        ],
-    });
+    res.status(404).send({ error: "Endpoint not found." });
 });
 
-// Start Server
+// Start the Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

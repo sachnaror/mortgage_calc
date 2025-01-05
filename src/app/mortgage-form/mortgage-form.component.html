@@ -1,7 +1,9 @@
 <div class="calculator-container">
-  <h3 class="text-center mb-4">Mortgage Calculator with Loan and Property</h3>
+  <h3 class="text-center mb-4">Mortgage Calculator</h3>
 
-  <form (ngSubmit)="calculateMortgage(mortgageForm.value)" #mortgageForm="ngForm">
+  <!-- Form -->
+  <form (ngSubmit)="onSubmit()" #mortgageForm="ngForm">
+    <!-- Loan Amount -->
     <div class="mb-3">
       <label for="loanAmount" class="form-label">Loan Amount (USD):</label>
       <input
@@ -9,11 +11,12 @@
         id="loanAmount"
         class="form-control"
         name="loanAmount"
-        ngModel
-        required
+        [(ngModel)]="formData.loanAmount"
         placeholder="Enter loan amount"
       />
     </div>
+
+    <!-- Interest Rate -->
     <div class="mb-3">
       <label for="interestRate" class="form-label">Annual Interest Rate (%):</label>
       <input
@@ -21,76 +24,38 @@
         id="interestRate"
         class="form-control"
         name="interestRate"
-        ngModel
-        required
+        [(ngModel)]="formData.interestRate"
         placeholder="Enter interest rate"
       />
     </div>
+
+    <!-- Loan Term -->
     <div class="mb-3">
       <label for="loanTerm" class="form-label">Loan Term (Years):</label>
-      <select id="loanTerm" class="form-select" name="loanTerm" ngModel required>
-        <option value="30">30 Years (Lower monthly, higher interest)</option>
+      <select
+        id="loanTerm"
+        class="form-select"
+        name="loanTerm"
+        [(ngModel)]="formData.loanTerm"
+      >
+        <option value="30">30 Years</option>
         <option value="20">20 Years</option>
         <option value="15">15 Years</option>
         <option value="10">10 Years</option>
         <option value="5">5 Years</option>
-        <option value="2">2 Years</option>
-        <option value="1">1 Year</option>
       </select>
     </div>
-    <div class="mb-3">
-      <label for="creditScore" class="form-label">Credit Score:</label>
-      <select id="creditScore" class="form-select" name="creditScore" ngModel required>
-        <option value="0.5">Excellent (740+)</option>
-        <option value="1">Good (680-739)</option>
-        <option value="1.5">Fair (620-679)</option>
-        <option value="2">Poor (&lt;620)</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label for="propertyType" class="form-label">Property Type:</label>
-      <select id="propertyType" class="form-select" name="propertyType" ngModel required>
-        <option value="0">Residential</option>
-        <option value="0.1">Commercial</option>
-        <option value="0.15">Investment Property</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label for="propertyTaxRate" class="form-label">Property Tax Rate (%):</label>
-      <input
-        type="number"
-        id="propertyTaxRate"
-        class="form-control"
-        name="propertyTaxRate"
-        ngModel
-        required
-        placeholder="Enter property tax rate"
-      />
-    </div>
-    <div class="mb-3">
-      <label for="insuranceCost" class="form-label">Annual Home Insurance (USD):</label>
-      <input
-        type="number"
-        id="insuranceCost"
-        class="form-control"
-        name="insuranceCost"
-        ngModel
-        required
-        placeholder="Enter annual insurance cost"
-      />
-    </div>
-    <button type="submit" class="btn btn-success w-100" [disabled]="!mortgageForm.valid">
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary w-100">
       Calculate Mortgage
     </button>
   </form>
 
-  <div class="mt-4" *ngIf="results.totalMonthlyPayment">
-    <h5>Results:</h5>
-    <p>Adjusted Interest Rate: {{ results.adjustedInterestRate }}%</p>
-    <p>Monthly Principal & Interest Payment: ${{ results.monthlyPayment }}</p>
-    <p>Monthly Property Tax: ${{ results.propertyTax }}</p>
-    <p>Monthly Home Insurance: ${{ results.homeInsurance }}</p>
-    <p><strong>Total Monthly Payment: ${{ results.totalMonthlyPayment }}</strong></p>
-    <p>Total Loan Cost (Including Interest): ${{ results.totalLoanCost }}</p>
+  <!-- Results -->
+  <div class="mt-4" *ngIf="results">
+    <h4>Results:</h4>
+    <p>Monthly Payment: ${{ results.monthlyPayment }}</p>
+    <p>Total Payment: ${{ results.totalPayment }}</p>
   </div>
 </div>

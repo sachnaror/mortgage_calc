@@ -1,55 +1,46 @@
-import { CommonModule } from '@angular/common'; // Required for *ngIf
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Required for ngForm
+import { FormsModule } from '@angular/forms'; // Import FormsModule
 
 @Component({
   selector: 'app-mortgage-form',
-  standalone: true, // Mark as standalone
+  standalone: true,
   templateUrl: './mortgage-form.component.html',
   styleUrls: ['./mortgage-form.component.css'],
-  imports: [CommonModule, FormsModule] // Import required modules
+  imports: [FormsModule, CommonModule], // Include FormsModule and CommonModule
 })
 export class MortgageFormComponent {
-  results = {
-    adjustedInterestRate: 0,
-    monthlyPayment: 0,
-    propertyTax: 0,
-    homeInsurance: 0,
-    totalMonthlyPayment: 0,
-    totalLoanCost: 0
+  formData = {
+    loanAmount: null,
+    interestRate: null,
+    loanTerm: null,
+    creditScore: '',
+    propertyType: '',
+    propertyTaxRate: null,
+    insuranceCost: null,
   };
 
-  calculateMortgage(form: any) {
-    const loanAmount = parseFloat(form.loanAmount);
-    const baseInterestRate = parseFloat(form.interestRate) / 100;
-    const loanTerm = parseInt(form.loanTerm, 10);
-    const creditScoreFactor = parseFloat(form.creditScore);
-    const propertyTypeFactor = parseFloat(form.propertyType);
-    const propertyTaxRate = parseFloat(form.propertyTaxRate) / 100;
-    const annualInsurance = parseFloat(form.insuranceCost);
+  results: any = null;
 
-    const adjustedInterestRate = baseInterestRate + creditScoreFactor * 0.005 + propertyTypeFactor;
+  constructor() { }
 
-    const monthlyInterestRate = adjustedInterestRate / 12;
+  onSubmit(): void {
+    console.log('Form submitted:', this.formData);
+
+    const loanAmount = this.formData.loanAmount || 0;
+    const interestRate = this.formData.interestRate || 0;
+    const loanTerm = this.formData.loanTerm || 1;
+
+    const monthlyRate = interestRate / 12 / 100;
     const numberOfPayments = loanTerm * 12;
-
-    const monthlyPrincipalAndInterest =
-      loanAmount *
-      (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) /
-      (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
-
-    const monthlyPropertyTax = (loanAmount * propertyTaxRate) / 12;
-    const monthlyInsurance = annualInsurance / 12;
-    const totalMonthlyPayment = monthlyPrincipalAndInterest + monthlyPropertyTax + monthlyInsurance;
-    const totalLoanCost = monthlyPrincipalAndInterest * numberOfPayments;
+    const monthlyPayment =
+      (loanAmount * monthlyRate) /
+      (1 - Math.pow(1 + monthlyRate, -numberOfPayments));
+    const totalPayment = monthlyPayment * numberOfPayments;
 
     this.results = {
-      adjustedInterestRate: parseFloat((adjustedInterestRate * 100).toFixed(2)),
-      monthlyPayment: parseFloat(monthlyPrincipalAndInterest.toFixed(2)),
-      propertyTax: parseFloat(monthlyPropertyTax.toFixed(2)),
-      homeInsurance: parseFloat(monthlyInsurance.toFixed(2)),
-      totalMonthlyPayment: parseFloat(totalMonthlyPayment.toFixed(2)),
-      totalLoanCost: parseFloat(totalLoanCost.toFixed(2))
+      monthlyPayment: isNaN(monthlyPayment) ? 0 : parseFloat(monthlyPayment.toFixed(2)),
+      totalPayment: isNaN(totalPayment) ? 0 : parseFloat(totalPayment.toFixed(2)),
     };
   }
 }
