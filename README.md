@@ -97,8 +97,8 @@ Have a question? Want to submit a feature request? Or just want to send us a jok
 
 ## ❤️ Contributors
 
-- You, for using this app! 🎉
-- Our coffee mugs, for keeping us caffeinated. ☕
+- Me, Ofcourse, for building this app! 🎉
+- Ginger Tea, for keeping me 'Tearated'. ☕
 
 ---
 
