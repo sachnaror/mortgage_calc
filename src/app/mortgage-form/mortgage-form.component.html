@@ -46,6 +46,63 @@
       </select>
     </div>
 
+    <!-- Credit Score -->
+    <div class="mb-3">
+      <label for="creditScore" class="form-label">Credit Score:</label>
+      <select
+        id="creditScore"
+        class="form-select"
+        name="creditScore"
+        [(ngModel)]="formData.creditScore"
+      >
+        <option value="Excellent">Excellent (740+)</option>
+        <option value="Good">Good (680-739)</option>
+        <option value="Fair">Fair (620-679)</option>
+        <option value="Poor">Poor (&lt;620)</option>
+      </select>
+    </div>
+
+    <!-- Property Type -->
+    <div class="mb-3">
+      <label for="propertyType" class="form-label">Property Type:</label>
+      <select
+        id="propertyType"
+        class="form-select"
+        name="propertyType"
+        [(ngModel)]="formData.propertyType"
+      >
+        <option value="Residential">Residential</option>
+        <option value="Commercial">Commercial</option>
+        <option value="Investment">Investment Property</option>
+      </select>
+    </div>
+
+    <!-- Property Tax Rate -->
+    <div class="mb-3">
+      <label for="propertyTaxRate" class="form-label">Property Tax Rate (%):</label>
+      <input
+        type="number"
+        id="propertyTaxRate"
+        class="form-control"
+        name="propertyTaxRate"
+        [(ngModel)]="formData.propertyTaxRate"
+        placeholder="Enter property tax rate"
+      />
+    </div>
+
+    <!-- Insurance Cost -->
+    <div class="mb-3">
+      <label for="insuranceCost" class="form-label">Annual Home Insurance (USD):</label>
+      <input
+        type="number"
+        id="insuranceCost"
+        class="form-control"
+        name="insuranceCost"
+        [(ngModel)]="formData.insuranceCost"
+        placeholder="Enter annual insurance cost"
+      />
+    </div>
+
     <!-- Submit Button -->
     <button type="submit" class="btn btn-primary w-100">
       Calculate Mortgage
