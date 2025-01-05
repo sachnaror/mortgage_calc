@@ -108,4 +108,6 @@ I hate loan/mortagges and credit cards. I never use these financial instruments.
 
 ---
 
-Enjoy the journey of homeownership with **Mortgage Calculator**! 🏠✨
+Enjoy the journey of property ownership with my **Mortgage Calculator**!
+
+Stay tuned for a lot more features to come by  🏠✨
